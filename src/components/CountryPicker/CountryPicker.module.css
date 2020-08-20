@@ -1,0 +1,12 @@
+
+.form_control{
+    margin-bottom: 30px !important;
+    width: 30%;
+
+    min-width: 150px;
+
+}
+
+.form_control label{
+    margin-left: 100px;
+}
