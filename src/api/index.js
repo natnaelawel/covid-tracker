@@ -3,8 +3,8 @@ import axios from "axios";
 const url = "https://covid19.mathdro.id/api";
 
 export const fetchData = async (country) => {
-  let changeableUrl = url
-  if(country !== 'global'){
+  let changeableUrl = url;
+  if (country !== "global") {
     changeableUrl = `${url}/countries/${country}`;
   }
   try {
@@ -13,34 +13,87 @@ export const fetchData = async (country) => {
     const {
       data: { confirmed, recovered, deaths, lastUpdate },
     } = await axios.get(changeableUrl);
-    const modifiedData = {confirmed,recovered,deaths,lastUpdate,};
+    const modifiedData = { confirmed, recovered, deaths, lastUpdate };
     return modifiedData;
   } catch (error) {
     console.error("error occured ", error.message);
   }
 };
 
-export const fetchDailyReport = async ()=>{
+export const fetchDailyReport = async () => {
   try {
-    const {data} = await axios.get(`${url}/daily`)
-    
+    const { data } = await axios.get(`${url}/daily`);
+
     const modifiedData = data.map((dailyReport) => ({
       confirmed: dailyReport.confirmed.total,
       deaths: dailyReport.deaths.total,
       date: dailyReport.reportDate,
     }));
-    console.log('daily data', modifiedData);
-    return modifiedData
+    console.log("daily data", modifiedData);
+    return modifiedData;
   } catch (error) {
-    console.log('error occured', error)
+    console.log("error occured", error);
   }
-}
-export const fetchCountries = async ()=>{
+};
+export const fetchCountries = async () => {
   try {
-    const { data:{countries} } = await axios.get(`${url}/countries`);
+    const {
+      data: { countries },
+    } = await axios.get(`${url}/countries`);
     // console.log('countries are ', countries)
-    return countries
+    return countries;
   } catch (error) {
-    console.log('error occured', error)
+    console.log("error occured", error);
   }
-}
+};
+
+export const getCountriesData = async () => {
+  try {
+    const { data } = await axios.get(
+      "https://disease.sh/v3/covid-19/countries"
+    );
+    return data;
+    // return data.map((country) => ({
+    //   name: country.country,
+    //   value: country.countryInfo.iso2,
+    //   countryInfo: country.countryInfo,
+    // }));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSingleData = async (name = null) => {
+         let url = "";
+         if (name === 'africa') {
+           url = `https://disease.sh/v3/covid-19/continents/africa`;
+         } else {
+           url = `https://disease.sh/v3/covid-19/countries/ethiopia`;
+         }
+         try {
+           const {
+             data: {
+               cases,
+               todayCases,
+               deaths,
+               todayDeaths,
+               recovered,
+               todayRecovered,
+               active,
+               critical,
+             },
+           } = await axios.get(url);
+           return {
+             cases,
+             todayCases,
+             deaths,
+             todayDeaths,
+             recovered,
+             todayRecovered,
+             active,
+             critical,
+           };
+         } catch (error) {
+           console.log(error);
+         }
+       };

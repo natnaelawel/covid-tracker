@@ -1,0 +1,19 @@
+.menuButton {
+    margin-right: 2px,
+}
+.title{
+    display: 'none',
+}
+.toolbar{
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+}
+.image{
+    width: 150px;
+}
+@media(max-width: 770px){
+    .title{
+        display: 'block',
+    }
+}

@@ -1,50 +1,44 @@
 import React  from 'react'
-import {Cards, Chart, CountryPicker} from './components';
 
 import styles from './App.module.css';
-import {fetchData} from "./api";
-import { CircularProgress, Typography } from '@material-ui/core';
-import coronaImages from "./images/image.png";
+import {fetchData, getCountriesData} from "./api";
+import "leaflet/dist/leaflet.css";
+import { topTenVictims } from "./components/utils/utils";
+import {Appbar, Main, Footer} from './components';
+
 class App extends React.Component {
-    state = {
-        data: {},
-        selectedCountry: 'global'
-    }
-    async componentDidMount (){
-        const data = await fetchData("global");
-        this.setState({ data:data })
-        console.log(this.state.data);
-    }
-    handleChangeCountry = async (country)=>{
-      //fetch the data and set the state
-      console.log('selected country ', country)
-       const data = await fetchData(country);
-       this.setState({ data: data, selectedCountry: country });
-       console.log(this.state.data);
-    }
-    render() {
-        const {data, selectedCountry} = this.state
-        return (
-          <div className={styles.container}>
-            <img
-              src={coronaImages}
-              alt="covid background"
-              className={styles.image}
-            />
-            {data.confirmed ? (
-              <>
-                <Cards data={data} selectedCountry={selectedCountry} />
-                <CountryPicker handleChangeCountry={this.handleChangeCountry} />
-                <Chart data={data} selectedCountry={selectedCountry} />
-              </>
-            ) : (
-              <>
-                <CircularProgress />
-                <Typography variant="h2" gutterBottom>Loading</Typography>
-              </>
-            )}
-          </div>
-        );
-    }
+  state = {
+    data: {},
+    countries: [],
+    topTenVictims: [],
+  };
+  async componentDidMount() {
+    const data = await fetchData("global");
+    const countries = await getCountriesData();
+    const topTen = await topTenVictims(countries);
+
+    this.setState({ data: data, countries: countries, topTenVictims: topTen });
+  }
+
+  render() {
+    const {
+      data,
+      countries,
+      topTenVictims,
+    } = this.state;
+    return (
+      <div>
+        <Appbar />
+        <div className={styles.container}>
+          <Main
+            allData={data}
+            countries={countries}
+            topTenVictims={topTenVictims}
+          />
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 }
 export default App;

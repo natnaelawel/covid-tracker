@@ -1,20 +1,18 @@
 body{
-    background-color: rgb(240, 240, 240);
-
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(250, 250, 250);
 }
-
 .container{
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    /* justify-content: center; */
+    /* flex-direction: column; */
+    margin: 10px 10px;
 }
-
 @media(max-width: 770px){
     .container{
-        margin: 0 10%;
-    }
-    .image{
-        width: 100%;
+        margin: 0 20px;
     }
 }

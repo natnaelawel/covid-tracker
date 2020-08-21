@@ -15,8 +15,10 @@ function Chart({data: {confirmed, recovered, deaths}, selectedCountry}) {
     }, [])
 
     console.log(confirmed, recovered, deaths)
-    const lineChart = (dailyReport.length ? (
+    const lineChart = dailyReport.length ? (
       <Line
+        className={styles.charts_graph}
+        options={{ maintainAspectRatio: false }}
         data={{
           labels: dailyReport.map(({ date }) => date),
           datasets: [
@@ -36,10 +38,12 @@ function Chart({data: {confirmed, recovered, deaths}, selectedCountry}) {
           ],
         }}
       />
-    ) : null);
+    ) : null;
 
-    const barChart = (confirmed && (
+    const barChart = confirmed && (
       <Bar
+        className={styles.charts_graph}
+        options={{ maintainAspectRatio: false }}
         data={{
           labels: ["Infected", "Recovered", "Deaths"],
           datasets: [
@@ -50,17 +54,16 @@ function Chart({data: {confirmed, recovered, deaths}, selectedCountry}) {
                 "rgba(0, 255, 0, 0.5)",
                 "rgba(255, 0, 0, 0.5)",
               ],
-              data: [confirmed.value, recovered.value, deaths.value]
+              data: [confirmed.value, recovered.value, deaths.value],
             },
           ],
-          
         }}
         options={{
           legend: { display: false },
           title: { display: true, text: `Current state in ${selectedCountry}` },
         }}
       />
-    ));
+    );
     return (
         <div className={styles.container}>
             {selectedCountry !== 'global' ? barChart : lineChart}

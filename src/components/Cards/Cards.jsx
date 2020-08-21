@@ -3,19 +3,22 @@ import { Card, CardContent, Typography, Grid } from "@material-ui/core";
 import styles from "./Cards.module.css";
 import CountUp from "react-countup";
 import cx from 'classnames';
+import { prettyPrintStat } from "../utils/utils";
+
+
 
 function Cards({ data: { confirmed, recovered, deaths, lastUpdate } }) {
   if (!confirmed) {
     return "";
   }
   return (
-    <div className={styles.container}>
+    <div className={styles.card_container}>
       {/* <Card/> */}
-      <Grid container spacing={3} justify="center">
+      <Grid container className={styles.grid} spacing={3} justify="space-between">
         <Grid
           item
           component={Card}
-          xs={12}
+          xs={10}
           md={2}
           className={cx(styles.card, styles.infected)}
         >
@@ -29,6 +32,7 @@ function Cards({ data: { confirmed, recovered, deaths, lastUpdate } }) {
                 duration={2.5}
                 end={confirmed.value}
                 separator=","
+                formattingFn={(value) => prettyPrintStat(value)}
               />
             </Typography>
             <Typography color="textSecondary">
@@ -42,7 +46,7 @@ function Cards({ data: { confirmed, recovered, deaths, lastUpdate } }) {
         <Grid
           item
           component={Card}
-          xs={12}
+          xs={10}
           md={2}
           className={cx(styles.card, styles.recovered)}
         >
@@ -51,16 +55,15 @@ function Cards({ data: { confirmed, recovered, deaths, lastUpdate } }) {
               Recovered
             </Typography>
             <Typography variant="h5">
-              {" "}
               <CountUp
                 start={0}
                 duration={2.5}
                 end={recovered.value}
                 separator=","
+                formattingFn={(value) => prettyPrintStat(value)}
               />
             </Typography>
             <Typography color="textSecondary">
-              {" "}
               {new Date(lastUpdate).toDateString()}
             </Typography>
             <Typography variant="body2">
@@ -71,7 +74,7 @@ function Cards({ data: { confirmed, recovered, deaths, lastUpdate } }) {
         <Grid
           item
           component={Card}
-          xs={12}
+          xs={10}
           md={2}
           className={cx(styles.card, styles.deaths)}
         >
@@ -80,16 +83,15 @@ function Cards({ data: { confirmed, recovered, deaths, lastUpdate } }) {
               Death
             </Typography>
             <Typography variant="h5">
-              {" "}
               <CountUp
                 start={0}
                 duration={2.5}
                 end={deaths.value}
                 separator=","
+                formattingFn={(value) => prettyPrintStat(value)}
               />
             </Typography>
             <Typography color="textSecondary">
-              {" "}
               {new Date(lastUpdate).toDateString()}
             </Typography>
             <Typography variant="body2">Number of death of COVID-19</Typography>
@@ -98,7 +100,7 @@ function Cards({ data: { confirmed, recovered, deaths, lastUpdate } }) {
         <Grid
           item
           component={Card}
-          xs={12}
+          xs={10}
           md={2}
           className={cx(styles.card, styles.active)}
         >
@@ -107,19 +109,20 @@ function Cards({ data: { confirmed, recovered, deaths, lastUpdate } }) {
               Active Cases
             </Typography>
             <Typography variant="h5">
-              {" "}
               <CountUp
                 start={0}
                 duration={2.5}
                 end={confirmed.value - (recovered.value + deaths.value)}
                 separator=","
+                formattingFn={(value) => prettyPrintStat(value)}
               />
             </Typography>
             <Typography color="textSecondary">
-              {" "}
               {new Date(lastUpdate).toDateString()}
             </Typography>
-            <Typography variant="body2">Number of active case of COVID-19</Typography>
+            <Typography variant="body2">
+              Number of active case of COVID-19
+            </Typography>
           </CardContent>
         </Grid>
       </Grid>

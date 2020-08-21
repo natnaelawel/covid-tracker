@@ -1,11 +1,12 @@
 import React,{useEffect, useState} from 'react'
-import {NativeSelect, FormControl, InputLabel} from '@material-ui/core';
+import {NativeSelect, FormControl, InputLabel, Select} from '@material-ui/core';
 
 import styles from './CountryPicker.module.css'
 import { fetchCountries } from '../../api';
 
 function CountryPicker({ handleChangeCountry }) {
   const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('global')
   useEffect(() => {
     const fetchData = async () => {
       setCountries(await fetchCountries());
@@ -15,25 +16,32 @@ function CountryPicker({ handleChangeCountry }) {
   }, []);
 
    const handleChange = (event) => {
+       setSelectedCountry(event.target.value);
        handleChangeCountry(event.target.value)
    };
   return (
-    <FormControl className={styles.form_control}>
+    <FormControl variant="outlined" className={styles.form_control}>
       <InputLabel htmlFor="country-native-helper">Country</InputLabel>
-
-      <NativeSelect
+      <Select
+        native
         defaultValue=""
+        value={selectedCountry}
+        onChange={handleChange}
+        label="Country"
         inputProps={{
           name: "Country",
           id: "country-native-helper",
         }}
-        onChange={handleChange}
       >
         <option value="global">Global</option>
 
         {countries &&
-          countries.map(({ name }, i) => <option key={i} value={name}>{name}</option>)}
-      </NativeSelect>
+          countries.map(({ name }, i) => (
+            <option key={i} value={name}>
+              {name}
+            </option>
+          ))}
+      </Select>
     </FormControl>
   );
 }
