@@ -5,6 +5,7 @@
 .card{
     min-width: 200px;
     margin: 3% 1% !important;
+    pointer: 'cursor'
 }
 
 .infected{

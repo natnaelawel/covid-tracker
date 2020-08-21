@@ -21,6 +21,12 @@ const casesTypeColors = {
     half_op: "rgba(251, 68, 67, 0.5)",
     multiplier: 2000,
   },
+   active: {
+    hex: "#f25209",
+    rgb: "rgb(251, 120, 67)",
+    half_op: "rgba(251, 68, 67, 0.5)",
+    multiplier: 1000,
+  },
 };
 
 export const sortData = (data) => {
@@ -35,33 +41,46 @@ export const sortData = (data) => {
   return sortedData;
 };
 
-export const topTenVictims = (data) => {
-         let sorted = sortData(data);
-         let topTen = [];
-         for (let index = 0; index < 10; index++) {
-           topTen.push(sorted[index]);
-         }
-         return topTen;
-       };
+export const getTopTenVictims = (data) => {
+  let sorted = sortData(data);
+  let topTen = [];
+  for (let index = 0; index < 10; index++) {
+    topTen.push(sorted[index]);
+  }
+  return topTen;
+};
 
-export const prettyPrintStat = (stat) =>
-  stat ? `+${numeral(stat).format("0.00a")}` : "+0";
+export const getCountries = (data)=>{
+   const modifiedData = data.map((country) => ({
+      name: country.country,
+      cases: country.cases,
+      active: country.active,
+      recovered: country.recovered,
+      deaths: country.deaths,
+      lat: country.countryInfo.lat,
+      long: country.countryInfo.long,
+      flag: country.countryInfo.flag
+    }));
+  return modifiedData
+}
+
+export const prettyPrintStat = (stat) => stat ? `+${numeral(stat).format("0.00a")}` : "+0";
 
 export const showDataOnMap = (data, casesType = "cases") =>
   data.map((country, i) => (
     <Circle
-      center={[country.countryInfo.lat, country.countryInfo.long]}
-      color={casesTypeColors[casesType].hex}
-      fillColor={casesTypeColors[casesType].hex}
+      center={[country.lat, country.long]}
+      color={casesTypeColors.[casesType].hex}
+      fillColor={casesTypeColors.[casesType].hex}
       fillOpacity={0.4}
       key={i}
-      radius={ Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier }
+      radius={ Math.sqrt(country[casesType]) * casesTypeColors.[casesType].multiplier }
     >
       <Popup>
         <div className="info-container">
           <div
             className="info-flag"
-            style={{ backgroundImage: `url(${country.countryInfo.flag})` }}
+            style={{ backgroundImage: `url(${country.flag})` }}
           ></div>
           <div className="info-name">{country.country}</div>
           <div className="info-confirmed">

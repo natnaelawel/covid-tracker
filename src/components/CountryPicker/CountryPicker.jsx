@@ -1,19 +1,19 @@
-import React,{useEffect, useState} from 'react'
-import {NativeSelect, FormControl, InputLabel, Select} from '@material-ui/core';
+import React,{ useState} from 'react'
+import {FormControl, InputLabel, Select} from '@material-ui/core';
 
 import styles from './CountryPicker.module.css'
-import { fetchCountries } from '../../api';
+// import { fetchCountries } from '../../api';
 
-function CountryPicker({ handleChangeCountry }) {
-  const [countries, setCountries] = useState([]);
+function CountryPicker({ handleChangeCountry , countries}) {
+  // const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('global')
-  useEffect(() => {
-    const fetchData = async () => {
-      setCountries(await fetchCountries());
-    };
-    console.log("inside country picker ", countries);
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setCountries(await fetchCountries());
+  //   };
+  //   console.log("inside country picker ", countries);
+  //   fetchData();
+  // }, []);
 
    const handleChange = (event) => {
        setSelectedCountry(event.target.value);
@@ -24,7 +24,7 @@ function CountryPicker({ handleChangeCountry }) {
       <InputLabel htmlFor="country-native-helper">Country</InputLabel>
       <Select
         native
-        defaultValue=""
+        defaultValue={selectedCountry}
         value={selectedCountry}
         onChange={handleChange}
         label="Country"
@@ -33,6 +33,7 @@ function CountryPicker({ handleChangeCountry }) {
           id: "country-native-helper",
         }}
       >
+      
         <option value="global">Global</option>
 
         {countries &&

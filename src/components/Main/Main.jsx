@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   CircularProgress,
   Typography,
-  CardContent,
-  Card,
 } from "@material-ui/core";
-import { fetchData, getCountriesData } from "../../api";
+import {getSpecificReport, getCountriesReport,  getMonthlyReport} from "../../api";
 
 import CountryPicker from "../CountryPicker/CountryPicker";
 import Cards from "../Cards/Cards";
@@ -14,37 +12,68 @@ import TopListTable from "../Table/Table";
 import SingleCard from "../Cards/SingleCard/SingleCard";
 import Map from "../Map/Map";
 import styles from "./Main.module.css";
+import { getTopTenVictims, getCountries } from "../../utils/utils";
 
-function Main({ countries, allData, topTenVictims }) {
-  const [data, setData] = useState(allData);
+
+function Main() {
+  const [dailyReport, setDailyReport] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [topTenVictims, setTopTenVictims] = useState([]);
   const [mapZoom, setMapZoom] = useState(3);
   const [casesType, setCasesType] = useState("cases");
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
-  // const [topTenVictims, setTopTenVictims] = useState([])
   const [selectedCountry, setSelectedCountry] = useState("global");
+ const [monthlyReport, setMonthlyReport] = useState([]);
+ const [isLoading, setIsLoading] = useState(false);
 
-  // const [countries, setCountries] = useState([])
 
-  const handleChangeCountry = (country) => {
+  const handleChangeCountry = async (country) => {
     setSelectedCountry(country);
   };
- 
+
   useEffect(() => {
     const fetchCountriesData = async () => {
-      const data = await fetchData(selectedCountry);
-      setData(data);
+      setIsLoading(true)
+      try {
+        let data = await getSpecificReport(selectedCountry);
+        setDailyReport(data);
+        data = await getCountriesReport();
+        setTopTenVictims(getTopTenVictims(data))
+        setCountries(getCountries(data))
+        data = await getMonthlyReport(selectedCountry)
+        setMonthlyReport(data)
+        setIsLoading(false)
+      } catch (error) {
+        setIsLoading(false);
+
+        console.log(error.message)  
+      }
     };
     fetchCountriesData();
   }, [selectedCountry]);
+ 
+     useEffect(() => {
+        const fetchApi = async () =>{
+            const data = await getMonthlyReport(selectedCountry)
+            setMonthlyReport(data)
+            console.log('monthly Report', monthlyReport)
+        }
+        fetchApi()
+    }, [])
+  const onCardClicked = (casesType)=>{
+    setCasesType(casesType)
+    console.log('cases type is ', casesType)
+  }
 
   return (
     <div className={styles.main}>
-      {countries ? (
+      {dailyReport ? (
         <>
           <Cards
             style={{ border: "1px solid red" }}
-            data={data}
+            dailyReport={dailyReport}
             selectedCountry={selectedCountry}
+            onCardClicked={onCardClicked}
           />
           <Map
             countries={countries}
@@ -58,10 +87,16 @@ function Main({ countries, allData, topTenVictims }) {
                 <Typography variant="h5" gutterBottom>
                   Covid-19 Statistics
                 </Typography>
-                <CountryPicker handleChangeCountry={handleChangeCountry} />
+                <CountryPicker
+                  countries={countries}
+                  handleChangeCountry={handleChangeCountry}
+                />
               </div>
               <div className={styles.chartBody}>
-                <Chart data={data} selectedCountry={selectedCountry} />
+                <Chart
+                  monthlyReport={monthlyReport}
+                  selectedCountry={selectedCountry}
+                />
               </div>
             </div>
             <div className={styles.tableArea}>

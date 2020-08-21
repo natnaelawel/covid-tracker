@@ -35,7 +35,6 @@ const useStyles = makeStyles({
 });
 
 function TopListTable({ topTenVictims }) {
-    console.log('top ten victims ',topTenVictims)
   const classes = useStyles();
 
   return (

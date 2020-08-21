@@ -1,0 +1,103 @@
+   <Bar
+        className={styles.charts_graph}
+        options={{ maintainAspectRatio: false }}
+        data={{
+          // labels: ["Infected", "Recovered", "Deaths"],
+          labels: Object.keys(monthlyReport.cases),
+          datasets: [
+            {
+              label: "Infected",
+              backgroundColor: [
+                "rgba(0, 0, 255, 0.5)",
+                // "rgba(0, 255, 0, 0.5)",
+                // "rgba(255, 0, 0, 0.5)",
+              ],
+              data: [Object.values(monthlyReport.cases)],
+            },
+              {
+              label: "Infected",
+              backgroundColor: [
+                "rgba(0, 0, 255, 0.5)",
+                // "rgba(0, 255, 0, 0.5)",
+                // "rgba(255, 0, 0, 0.5)",
+              ],
+              data: [Object.values(monthlyReport.cases)],
+            },
+              {
+              label: "Infected",
+              backgroundColor: [
+                "rgba(0, 0, 255, 0.5)",
+                // "rgba(0, 255, 0, 0.5)",
+                // "rgba(255, 0, 0, 0.5)",
+              ],
+              data: [Object.values(monthlyReport.cases)],
+            },
+          ],
+        }}
+        options={{
+          legend: { display: false },
+          title: { display: true, text: `Current state in ${selectedCountry}` },
+           scales: {
+        yAxes: [
+          {
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              // Include a dollar sign in the ticks
+              callback: function (value, index, values) {
+                return prettyPrintStat(value)
+              },
+            },
+          },
+        ],
+      },
+        }}
+        
+      />
+
+
+
+       <Bar
+        className={styles.charts_graph}
+        options={{ maintainAspectRatio: false }}
+        data={{
+          // labels: ["Infected", "Recovered", "Deaths"],
+          labels: ["Infected", "Recovered", "Deaths"],
+          datasets: [
+            {
+              label: "People",
+              backgroundColor: [
+                "rgba(0, 0, 255, 0.5)",
+                "rgba(0, 255, 0, 0.5)",
+                "rgba(255, 0, 0, 0.5)",
+              ],
+              data: [
+                    [0, ...Object.values(monthlyReport.cases)],
+                    [0, ...Object.values(monthlyReport.recovered)],
+                    [0, ... Object.values(monthlyReport.deaths)],
+              ]     
+            },
+          ],
+        }}
+        options={{
+          legend: { display: false },
+          title: { display: true, text: `Current state in ${selectedCountry}` },
+           scales: {
+        yAxes: [
+          {
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              // Include a dollar sign in the ticks
+              callback: function (value, index, values) {
+                return prettyPrintStat(value)
+              },
+            },
+          },
+        ],
+      },
+        }}
+        
+      />
