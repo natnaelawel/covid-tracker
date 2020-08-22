@@ -5,23 +5,38 @@
 .card{
     min-width: 200px;
     margin: 3% 1% !important;
-    pointer: 'cursor'
+    cursor: pointer;
 }
 
 .infected{
-    border-bottom: 10px solid rgba(0, 0, 255, 0.5);
+    border-bottom: 10px solid rgba(19, 19, 160, 0.5);
+    min-width: 220px;
+    box-shadow:12px 10px 8px 3px rgba(0, 0, 0, 0.9);
 }
 
 .recovered{
     border-bottom: 10px solid rgba(0, 255, 0, 0.5);
+    min-width: 220px;
+    box-shadow:12px 10px 8px 3px rgba(0, 0, 0, 0.9);
+
+
 }
 
 .deaths{
     border-bottom: 10px solid rgba(255, 0, 0, 0.9);
+    min-width: 220px;
+    box-shadow:12px 10px 8px 3px rgba(0, 0, 0, 0.9);
+
+
 }
 .active{
     border-bottom: 10px solid rgba(255, 0, 0, 0.4);
+    min-width: 220px;
+    box-shadow:12px 10px 8px 3px rgba(0, 0, 0, 0.9);
+
+
 }
+
 
 @media(max-width: 700px){
     .card{

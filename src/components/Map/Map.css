@@ -17,6 +17,7 @@
   
   .info-flag img {
     width: 100px;
+    height: 100px;
     border-radius: 5px;
   }
   
@@ -31,7 +32,7 @@
   }
   
   .info-flag {
-    height: 40px;
+    height: 100px;
     width: 100%;
     background-size: cover;
     border-radius: 8px;

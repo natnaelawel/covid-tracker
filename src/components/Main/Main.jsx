@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   CircularProgress,
   Typography,
+  LinearProgress,
 } from "@material-ui/core";
 import {getSpecificReport, getCountriesReport,  getMonthlyReport} from "../../api";
 
@@ -23,8 +24,10 @@ function Main() {
   const [casesType, setCasesType] = useState("cases");
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [selectedCountry, setSelectedCountry] = useState("global");
- const [monthlyReport, setMonthlyReport] = useState([]);
- const [isLoading, setIsLoading] = useState(false);
+  const [monthlyReport, setMonthlyReport] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  // const [activeCard,   setActiveCard] = useState('cases')
+
 
 
   const handleChangeCountry = async (country) => {
@@ -44,8 +47,7 @@ function Main() {
         setMonthlyReport(data)
         setIsLoading(false)
       } catch (error) {
-        setIsLoading(false);
-
+        // setIsLoading(false);
         console.log(error.message)  
       }
     };
@@ -68,12 +70,13 @@ function Main() {
   return (
     <div className={styles.main}>
       {dailyReport ? (
-        <>
+        <div>
           <Cards
             style={{ border: "1px solid red" }}
             dailyReport={dailyReport}
             selectedCountry={selectedCountry}
             onCardClicked={onCardClicked}
+            casesType={casesType}
           />
           <Map
             countries={countries}
@@ -120,14 +123,14 @@ function Main() {
             </Typography>
             <SingleCard className={styles.status_list} name="ethiopia" />
           </div>
-        </>
+        </div>
       ) : (
-        <>
+        <div className={styles.loading}>
           <CircularProgress />
           <Typography variant="h2" gutterBottom>
             Loading
           </Typography>
-        </>
+        </div>
       )}
     </div>
   );

@@ -18,12 +18,13 @@ function Cards({
     lastUpdate,
   },
   onCardClicked,
+  casesType,
 }) {
   if (!cases) {
     return "";
   }
-  const handleCardClicked = (caseType) => {
-    onCardClicked(caseType);
+  const handleCardClicked = (casesType) => {
+    onCardClicked(casesType);
     console.log("card has clicked");
   };
   return (
@@ -38,14 +39,14 @@ function Cards({
         xs={10}
         md={2}
         component={Card}
-        className={cx(styles.card, styles.infected)}
+        className={cx(styles.card, casesType==='cases'? styles.infected : null)}
         onClick={() => handleCardClicked("cases")}
       >
         <CardContent>
-          <Typography color="textSecondary" variant="h5" gutterBottom>
-            Total Case
+          <Typography color="textSecondary" variant="h6" gutterBottom>
+            Total Confirmed
           </Typography>
-          <Typography variant="h3" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             <CountUp
               start={0}
               duration={2.5}
@@ -54,7 +55,7 @@ function Cards({
               formattingFn={(value) => prettyPrintStat(value)}
             />
           </Typography>
-          <Typography color="textSecondary">Today Cases</Typography>
+          <Typography color="textSecondary" variant="h6" gutterBottom >Today</Typography>
           <Typography variant="h4" gutterBottom>
             <CountUp
               start={0}
@@ -72,14 +73,14 @@ function Cards({
         xs={10}
         md={2}
         component={Card}
-        className={cx(styles.card, styles.recovered)}
+        className={cx(styles.card, casesType==='recovered'? styles.recovered : null)}
         onClick={() => handleCardClicked("recovered")}
       >
         <CardContent>
-          <Typography color="textSecondary" variant="h5" gutterBottom>
+          <Typography color="textSecondary" variant="h6" gutterBottom>
             Total Recovered
           </Typography>
-          <Typography variant="h3" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             <CountUp
               start={0}
               duration={2.5}
@@ -88,7 +89,7 @@ function Cards({
               formattingFn={(value) => prettyPrintStat(value)}
             />
           </Typography>
-          <Typography color="textSecondary">Today Recovered</Typography>
+          <Typography color="textSecondary" variant="h6">Today Recovered</Typography>
           <Typography variant="h4" gutterBottom>
             <CountUp
               start={0}
@@ -106,14 +107,14 @@ function Cards({
         xs={10}
         md={2}
         component={Card}
-        className={cx(styles.card, styles.deaths)}
+        className={cx(styles.card, casesType==='deaths'? styles.deaths : null)}
         onClick={() => handleCardClicked("deaths")}
       >
         <CardContent>
-          <Typography color="textSecondary" variant="h5" gutterBottom>
+          <Typography color="textSecondary" variant="h6" gutterBottom>
             Total Death
           </Typography>
-          <Typography variant="h3" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             <CountUp
               start={0}
               duration={2.5}
@@ -122,7 +123,7 @@ function Cards({
               formattingFn={(value) => prettyPrintStat(value)}
             />
           </Typography>
-          <Typography color="textSecondary">Today Deaths</Typography>
+          <Typography color="textSecondary" variant="h6">Today Deaths</Typography>
           <Typography variant="h4" gutterBottom>
             <CountUp
               start={0}
@@ -140,14 +141,14 @@ function Cards({
         xs={10}
         md={2}
         component={Card}
-        className={cx(styles.card, styles.active)}
+        className={cx(styles.card, casesType==='active'? styles.active : null)}
         onClick={() => handleCardClicked("active")}
       >
         <CardContent>
-          <Typography color="textSecondary" variant="h5" gutterBottom>
-            Total Active Case
+          <Typography color="textSecondary" variant="h6" gutterBottom>
+            Total Active
           </Typography>
-          <Typography variant="h3" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             <CountUp
               start={0}
               duration={2.5}

@@ -13,11 +13,8 @@ function SingleCard({name}) {
      };
      fetchSingleData(name);
    }, []);
-  return (
-    <div
-      className={styles.cards}
-
-    >
+  return data ? (
+    <div className={styles.cards}>
       <Card variant="outlined" className={styles.status_list_item}>
         <CardContent>
           <Typography color="textSecondary">Total Cases</Typography>
@@ -67,7 +64,7 @@ function SingleCard({name}) {
         </CardContent>
       </Card>
     </div>
-  );
+  ) : null;
 }
 
 export default SingleCard;
