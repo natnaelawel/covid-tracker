@@ -12,7 +12,7 @@ function SingleCard({name}) {
        setData(await getSingleData(name));
      };
      fetchSingleData(name);
-   }, []);
+   }, [name]);
   return data ? (
     <div className={styles.cards}>
       <Card variant="outlined" className={styles.status_list_item}>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   CircularProgress,
   Typography,
-  LinearProgress,
 } from "@material-ui/core";
 import {getSpecificReport, getCountriesReport,  getMonthlyReport} from "../../api";
 
@@ -20,12 +19,12 @@ function Main() {
   const [dailyReport, setDailyReport] = useState([]);
   const [countries, setCountries] = useState([]);
   const [topTenVictims, setTopTenVictims] = useState([]);
-  const [mapZoom, setMapZoom] = useState(3);
+  const [mapZoom] = useState(3);
   const [casesType, setCasesType] = useState("cases");
-  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [selectedCountry, setSelectedCountry] = useState("global");
   const [monthlyReport, setMonthlyReport] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   // const [activeCard,   setActiveCard] = useState('cases')
 
 
@@ -61,7 +60,7 @@ function Main() {
             console.log('monthly Report', monthlyReport)
         }
         fetchApi()
-    }, [])
+    }, [monthlyReport, selectedCountry])
   const onCardClicked = (casesType)=>{
     setCasesType(casesType)
     console.log('cases type is ', casesType)

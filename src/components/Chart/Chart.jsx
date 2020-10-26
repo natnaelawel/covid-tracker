@@ -1,5 +1,6 @@
-import React,{useEffect, useState} from 'react'
-import {getDailyReport, getSpecificReport, getMonthlyReport} from '../../api';
+import React from 'react'
+// import React,{useEffect, useState} from 'react'
+// import {getDailyReport, getSpecificReport, getMonthlyReport} from '../../api';
 import { Line, Bar } from "react-chartjs-2";
 import styles from './Chart.module.css';
 import numeral from 'numeral'
@@ -94,17 +95,17 @@ function Chart({monthlyReport, selectedCountry='global'}) {
       />
     ) : null;
 
-  const changedData = (monthlyReport)=> {
-      let addData = [];
-      for(let i = 0; i< monthlyReport.cases.length; i++){
-        addData.push([
-            Object.values(monthlyReport.cases)[i], 
-            Object.values(monthlyReport.recovered)[i], 
-            Object.values(monthlyReport.deaths)[i], 
-            ])
-      }
-      return addData;
-    }
+  // const changedData = (monthlyReport)=> {
+  //     let addData = [];
+  //     for(let i = 0; i< monthlyReport.cases.length; i++){
+  //       addData.push([
+  //           Object.values(monthlyReport.cases)[i], 
+  //           Object.values(monthlyReport.recovered)[i], 
+  //           Object.values(monthlyReport.deaths)[i], 
+  //           ])
+  //     }
+  //     return addData;
+  //   }
     const barChart = monthlyReport?.cases && (
       <Bar
         className={styles.charts_graph}
